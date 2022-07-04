@@ -17,13 +17,18 @@ class AdminUserSeeder extends Seeder
     public function run()
     {
         $adminRole = Role::create(['name' => 'Administrator']);
-        $permission = Permission::create(['name' => 'manage tasks']);
-        $permission->assignRole($adminRole);
+        $permission1 = Permission::create(["name"=>"manage users"]);
+        $permission2 = Permission::create(["name"=>"manage roles"]);
+        $permission3 = Permission::create(["name"=>"manage permissions"]);
+        $permission4 = Permission::create(["name"=>"manage tasks"]);
+
+        $adminRole->syncPermissions([$permission1, $permission2, $permission3, $permission4]);
 
         $adminUser = User::factory()->create([
             'email' => 'admin@admin.com',
             'password' => bcrypt('SecurePassword')
         ]);
+        
         $adminUser->assignRole('Administrator');
     }
 }

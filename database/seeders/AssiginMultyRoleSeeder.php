@@ -18,9 +18,9 @@ class AssiginMultyRoleSeeder extends Seeder
     {
 
         $permission1 = Permission::create(["name"=>"manage users"]);
-        $permission2 = Permission::findById(1);
-        $permission3 = Permission::findById(2);
-        $permission4 = Permission::create(["name"=>"manage roles"]);
+        $permission2 = Permission::create(["name"=>"manage roles"]);
+        $permission3 = Permission::create(["name"=>"manage permissions"]);
+        $permission4 = Permission::create(["name"=>"manage tasks"]);
 
         $role = Role::findById(1);
         $role->syncPermissions([$permission1, $permission2, $permission3, $permission4]);

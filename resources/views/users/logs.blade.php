@@ -19,6 +19,7 @@
                             <th class="px-4 py-3 float-right">Actions</th>
                         </tr>
                     </thead>
+                    
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
                         @forelse ($logs as $log)

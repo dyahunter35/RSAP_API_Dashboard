@@ -28,6 +28,7 @@ Route::middleware(["auth:sanctum", 'verified'])->group(function () {
 
     Route::get('logout', [\App\Http\Controllers\api\UserController::class, 'logout']);
 });
+Route::get('patient/{key}', [\App\Http\Controllers\api\ApiPatientsController::class, 'search']);
 
 // Route::middleware([
 //     'auth:sanctum',

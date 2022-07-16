@@ -5102,6 +5102,19 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
+$(document).ready(function () {
+  $('[name="all_permission"]').on('click', function () {
+    if ($(this).is(':checked')) {
+      $.each($('.permission'), function () {
+        $(this).prop('checked', true);
+      });
+    } else {
+      $.each($('.permission'), function () {
+        $(this).prop('checked', false);
+      });
+    }
+  });
+});
 
 /***/ }),
 

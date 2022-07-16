@@ -21,14 +21,15 @@ class AdminUserSeeder extends Seeder
         $permission2 = Permission::create(["name"=>"manage roles"]);
         $permission3 = Permission::create(["name"=>"manage permissions"]);
         $permission4 = Permission::create(["name"=>"manage tasks"]);
+        $permission5 = Permission::create(["name"=>"manage patients"]);
 
-        $adminRole->syncPermissions([$permission1, $permission2, $permission3, $permission4]);
+        $adminRole->syncPermissions([$permission1, $permission2, $permission3, $permission4 ,$permission5]);
 
         $adminUser = User::factory()->create([
             'email' => 'admin@admin.com',
             'password' => bcrypt('SecurePassword')
         ]);
-        
+
         $adminUser->assignRole('Administrator');
     }
 }

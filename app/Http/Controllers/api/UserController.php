@@ -57,7 +57,7 @@ class UserController extends Controller
 
         $user = User::where('email', $fields['email'])->first();
         // print_r($data);
-        if (!$user || !Hash::check($fields['password'], $user->password)) {
+        if (!$user || !Hash::check($fields['password'], $user->password) || $user->hasRole("")) {
             return response([
                 'isSuccess' => false,
                 'message' => 'These credentials do not match our records.',

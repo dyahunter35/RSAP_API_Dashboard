@@ -75,9 +75,10 @@ class RolesController extends Controller
     public function show(Role $role)
     {
         $role = $role;
-        $rolePermissions = $role->permissions;
+        $rolePermissions = $role->permissions->pluck('name')->toArray();
+        $permissions = Permission::get();
 
-        return view('roles.show', compact('role', 'rolePermissions'));
+        return view('roles.show', compact('role', 'rolePermissions', 'permissions'));
     }
 
     /**
@@ -110,6 +111,8 @@ class RolesController extends Controller
         ]);
 
         $role->update($request->only('name'));
+
+        $role->update(['guard_name'=>'web']);
 
         $role->syncPermissions($request->get('permission'));
 

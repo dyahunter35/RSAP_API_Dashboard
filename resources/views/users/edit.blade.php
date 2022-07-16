@@ -9,31 +9,30 @@
         <form method="post" action="{{ route('users.update', $user->id) }}">
             @method('put')
             @csrf
-            
+
             <div>
                 <x-jet-label for="name" value="{{ __('Name') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{$user->name}}"
-                    required autofocus autocomplete="name" />
+                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name"
+                    value="{{ $user->name }}" required autofocus autocomplete="name" />
             </div>
 
             <div class="mt-4">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email"  value="{{$user->email}}"
-                    required />
+                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email"
+                    value="{{ $user->email }}" required />
             </div>
 
-            <div class="mt-4">
+            <div class="col-span-6 sm:col-span-3">
                 <x-jet-label for="password" value="{{ __('ٌRoles') }}" />
-                <select class="form-control"
-                        name="role" required>
-                        <option value="">Select role</option>
-                        @foreach($roles as $role)
-                            <option value="{{ $role->id }}"
-                                {{ in_array($role->name, $userRole)
-                                    ? 'selected'
-                                    : '' }}>{{ $role->name }}</option>
-                        @endforeach
-                    </select>
+                <select id="country" name="role" required autocomplete="country-name"
+                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="">Select role</option>
+
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}" {{ in_array($role->name, $userRole) ? 'selected' : '' }}>
+                            {{ $role->name }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mt-4">

@@ -49,12 +49,18 @@ Route::middleware([
     Route::resource('patients', \App\Http\Controllers\PatientController::class);
     Route::resource('pfile', \App\Http\Controllers\PatientsFilesController::class);
 
-
 });
+
+Route::resource('image', \App\Http\Controllers\ImageCompareController::class);
+
 Route::get('users/log/{user}', [\App\Http\Controllers\UsersController::class,'log'])->name('users.log');
 
 Route::get('mail', [\App\Http\Controllers\MailController::class, 'sendEmail']);
 
 Route::get('modal', function(){
+    return view('patients.modal');
+});
+
+Route::get('imageCompare', function(){
     return view('patients.modal');
 });

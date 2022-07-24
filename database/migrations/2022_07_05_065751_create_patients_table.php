@@ -27,7 +27,7 @@ return new class extends Migration
 
         Schema::create('diseases', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger("patient_id");
 
             $table->foreign("patient_id")
                 ->references('id')
@@ -44,7 +44,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("patient_id");
 
-            $table->foreign("user_id")
+            $table->foreign("patient_id")
                 ->references('id')
                 ->on('patients')
                 ->onDelete('cascade');

@@ -21,24 +21,28 @@
                 <table class="w-full whitespace-no-wrap">
                     <thead>
                         <tr
-                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            class="text-center text-xs font-semibold tracking-wide text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                             <th class="px-4 py-4" scope="col">#</th>
-                            <th class="px-4 py-4">Name</th>
+                            <th class="px-4 py-4">Profile</th>
+                            <th class="px-4 py-4 ">Name</th>
                             <th class="px-4 py-3">Roles</th>
                             <th class="px-4 py-3 float-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-center">
 
                         @forelse ($users as $user)
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3 text-xs">
-                                    <span
-                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                        {{ $user->id }}
-                                    </span>
+                                    {{ $user->id }}
                                 </td>
-                                <td class="px-11 py-2">
+
+                                <td class="px-4 py-3 text-xs">
+                                    <img class="h-8 w-8 rounded-full object-cover"
+                                            src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />
+                                </td>
+
+                                <td class="px-4 py-2">
                                     <div class="flex items-center text-md">
                                         <!-- Avatar with inset shadow -->
                                         <div>
@@ -46,11 +50,12 @@
                                                 {{ $user->name }}
                                             </p>
                                             <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                {{ $user->created_at }}
+                                                {{ $user->email }}
                                             </p>
                                         </div>
                                     </div>
                                 </td>
+
                                 <td class="px-4 py-4 text-xs">
                                     @if ($user->roles->pluck('name')->get(0) != '')
                                         @switch($user->roles->pluck('color')->get(0))
@@ -80,7 +85,7 @@
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm float-right">
                                         <a class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
-                                            href="{{route('users.log',$user)}}">
+                                            href="{{ route('users.log', $user) }}">
                                             <button
                                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                 aria-label="Show">
@@ -94,6 +99,7 @@
                                                 </svg>
                                             </button>
                                         </a>
+
                                         <x-link href="{{ route('users.edit', $user) }}">
                                             <button
                                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -103,6 +109,19 @@
                                                     <path
                                                         d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
                                                     </path>
+                                                </svg>
+                                            </button>
+                                        </x-link>
+
+                                        <x-link onclick="return confirm('Email will send to user with reset link ?')"
+                                            href="{{ route('reset_email', $user->email) }}">
+                                            <button
+                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                aria-label="Edit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                    viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                                                 </svg>
                                             </button>
                                         </x-link>
@@ -167,7 +186,8 @@
                                 </li>
                                 @foreach ($users->links() as $link)
                                     <li>
-                                        <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                        <button
+                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                                             {{ $link->url() }}
                                         </button>
                                     </li>

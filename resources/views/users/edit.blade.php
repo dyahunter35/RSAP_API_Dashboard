@@ -1,7 +1,12 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <button
+                class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                <img class="h-10 w-10 rounded-full object-cover"
+                    src="{{$user->profile_photo_url}}"
+                    alt="Dr. Vincenza Morissette DDS">
+            </button>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

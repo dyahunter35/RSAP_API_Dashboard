@@ -1,9 +1,12 @@
 <?php
 
+use App\Mail\TestMail;
 use App\Models\Patient;
 use App\Models\PatientsFiles;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -61,6 +64,20 @@ Route::get('modal', function(){
     return view('patients.modal');
 });
 
-Route::get('imageCompare', function(){
-    return view('patients.modal');
+Route::get('mail', function(){
+    $details = [
+        'title' => 'hello',
+        'body' => '123456',
+    ];
+
+    Mail::to('dyahunter35@gmail.com')->send(new TestMail($details));
 });
+Route::get('reset/{email}', function($email){
+    $status = Password::sendResetLink(
+        ["email" => $email]
+    );
+
+    return $status === Password::RESET_LINK_SENT
+                ? back()->with(['message' => __($status)])
+                : back()->withErrors(['message' => __($status)]);
+})->name('reset_email');

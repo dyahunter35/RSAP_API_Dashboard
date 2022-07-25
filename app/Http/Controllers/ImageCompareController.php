@@ -41,23 +41,32 @@ class ImageCompareController extends Controller
 
             $source = sha1_file($request->file('file'));
 
-            //echo $source;
-
             $images = ImageCompare::all();
 
             foreach ($images as $image) {
-                //$image_data = sha1_file(($image->url)));
+
                 $image_data = sha1(Storage::get($image->url));
 
-                //echo $image_data . "<br/>";
-
                 if ($source == $image_data) {
-                    return Patient::where("id",$image->patient_id)->get();
+                    $patient = Patient::where("id",$image->patient_id)->get();
+                    return [
+                        "isSuccess"=>true,
+                        "message"=>"Patient Founded Successfuly",
+                        "data"=>$patient,
+                    ];
                 }
             }
-            return 'no match';
+            return [
+                "isSuccess"=>false,
+                "message"=>"Patient Not Found",
+                "data"=>null,
+            ];
         } else {
-            return ' no file';
+            return [
+                "isSuccess"=>true,
+                "message"=>"No File Available",
+                "data"=>null,
+            ];
         }
     }
 

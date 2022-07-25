@@ -58,7 +58,7 @@ class PatientController extends Controller
 
         //$patient = Patient::where("id",$id)->get();
 
-        
+
         //return ($patient);
         //dd($patient);
         return view('patients.show', compact('patient'));
@@ -95,6 +95,9 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        $patient->delete();
+
+        return redirect()->route('patients,index')
+            ->withSuccess(__('Patient deleted successfully.'));
     }
 }

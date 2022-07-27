@@ -11,42 +11,6 @@ use Laravel\Fortify\Contracts\LogoutResponse;
 
 class UserController extends Controller
 {
-    //
-
-    public function register(Request $request)
-    {
-        $fields = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string',
-            'phone' => 'string',
-            'admin' => 'string',
-        ]);
-
-        $user = User::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'phone' => $fields['phone'],
-            'admin' => $fields['admin'],
-            'work' => $request['work'],
-            'password' => bcrypt($fields['password']),
-        ]);
-
-        if ($user)
-            $response = [
-                'isSuccess' => true,
-                'message' => "registration is done",
-                'user' => $user,
-            ];
-        else
-            $response = [
-                'isSuccess' => false,
-                'message' => "registration error",
-                'user' => null,
-            ];
-
-        return response($response, 201);
-    }
 
     public function login(Request $request)
     {
@@ -57,7 +21,7 @@ class UserController extends Controller
 
         $user = User::where('email', $fields['email'])->first();
         // print_r($data);
-        if (!$user || !Hash::check($fields['password'], $user->password) || $user->hasRole("")) {
+        if (!$user || !Hash::check($fields['password'], $user->password) || !$user->hasRole("Paramedic")) {
             return response([
                 'isSuccess' => false,
                 'message' => 'These credentials do not match our records.',
@@ -65,13 +29,13 @@ class UserController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        //$token = $user->createToken('auth_token')->plainTextToken;
 
         $response = [
             'isSuccess' => true,
             'message' => "login successfully",
             'user' => $user,
-            'token' => $token
+            'token' => $token = "token"
         ];
 
         return response($response, 201);

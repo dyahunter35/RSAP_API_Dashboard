@@ -36,12 +36,14 @@ Route::middleware([
     })->name('phone');
 
     Route::get('/dashboard', function () {
+
         $users = User::all()->count();
         $patients = Patient::all()->count();
-
-        return view('dashboard',[
-            'users'=>$users,
-            'patients'=>$patients,
+        $paramedic = User::role('Paramedic')->get()->count();
+        return view('dashboard', [
+            'users' => $users,
+            'patients' => $patients,
+            'paramedic' => $paramedic
         ]);
     })->name('dashboard');
 
@@ -51,20 +53,19 @@ Route::middleware([
     Route::resource('roles', \App\Http\Controllers\RolesController::class);
     Route::resource('patients', \App\Http\Controllers\PatientController::class);
     Route::resource('pfile', \App\Http\Controllers\PatientsFilesController::class);
-
 });
 
 Route::resource('image', \App\Http\Controllers\ImageCompareController::class);
 
-Route::get('users/log/{user}', [\App\Http\Controllers\UsersController::class,'log'])->name('users.log');
+Route::get('users/log/{user}', [\App\Http\Controllers\UsersController::class, 'log'])->name('users.log');
 
 Route::get('mail', [\App\Http\Controllers\MailController::class, 'sendEmail']);
 
-Route::get('modal', function(){
+Route::get('modal', function () {
     return view('patients.modal');
 });
 
-Route::get('mail', function(){
+Route::get('mail', function () {
     $details = [
         'title' => 'hello',
         'body' => '123456',
@@ -72,12 +73,12 @@ Route::get('mail', function(){
 
     Mail::to('dyahunter35@gmail.com')->send(new TestMail($details));
 });
-Route::get('reset/{email}', function($email){
+Route::get('reset/{email}', function ($email) {
     $status = Password::sendResetLink(
         ["email" => $email]
     );
 
     return $status === Password::RESET_LINK_SENT
-                ? back()->with(['message' => __($status)])
-                : back()->withErrors(['message' => __($status)]);
+        ? back()->with(['message' => __($status)])
+        : back()->withErrors(['message' => __($status)]);
 })->name('reset_email');

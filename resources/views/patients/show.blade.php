@@ -101,20 +101,24 @@
                         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">Allergies</dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <ul>
+                                <div class="stats shadow w-full">
+
                                     @foreach (explode(',', $patient->allergies) as $data)
-                                        <li>
-                                            * {{ $data }}
-                                        </li>
+                                        <div class="stat">
+                                            <span
+                                                class="px-4 py-2 rounded-full text-black-500 bg-gray-200 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+                                                {{ $data }}
+                                            </span>
+
+                                        </div>
                                     @endforeach
-                                </ul>
+                                </div>
                             </dd>
                         </div>
 
                         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">Attachments
-                                <x-link href="{{ route('pfile.create', ['p' => $patient->id]) }}"
-                                    class="float-right">
+                                <x-link href="{{ route('pfile.create', ['p' => $patient->id]) }}" class="float-right">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

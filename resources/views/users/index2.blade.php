@@ -38,11 +38,11 @@
                                 </td>
 
                                 <td class="px-4 py-3 text-xs">
-                                    <img class="h-8 w-8 rounded-full object-cover"
+                                    <img class="h-12 w-12 rounded-full object-cover"
                                             src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />
                                 </td>
 
-                                <td class="px-4 py-2">
+                                <td class="px-4 py-2 text-left">
                                     <div class="flex items-center text-md">
                                         <!-- Avatar with inset shadow -->
                                         <div>
@@ -79,8 +79,6 @@
                                                 {{ '' }}
                                         @endswitch
                                     @endif
-
-
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm float-right">

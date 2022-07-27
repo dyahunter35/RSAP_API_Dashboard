@@ -46,30 +46,22 @@
                             </div>
 
                             <div class="stat">
-                                <div class="stat-figure text-secondary">
-                                    <div class="avatar online">
-                                        <div class="w-16 rounded-full">
-                                            <img src="https://placeimg.com/128/128/people" />
-                                        </div>
-                                    </div>
+                                <div class="stat-figure" style="color: #00f">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        class="inline-block w-8 h-8 stroke-current">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                        </path>
+                                    </svg>
+
                                 </div>
-                                <div class="stat-value">86%</div>
-                                <div class="stat-title">Tasks done</div>
-                                <div class="stat-desc text-secondary">31 tasks remaining</div>
+                                <div class="stat-title">Total Paramedics</div>
+                                <div class="stat-value" style="color: #00f">{{ $paramedic }}</div>
+                                <div class="stat-desc">Paramedic</div>
                             </div>
 
-                            <div class="stat">
-                                <div class="stat-figure text-secondary">
-                                    <div class="avatar online">
-                                        <div class="w-16 rounded-full">
-                                            <img src="https://placeimg.com/128/128/people" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="stat-value">86%</div>
-                                <div class="stat-title">Tasks done</div>
-                                <div class="stat-desc text-secondary">31 tasks remaining</div>
-                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -276,7 +268,7 @@
                 </h2>
                 <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
                     <div class="inline-flex rounded-md shadow">
-                        <a href="{{route('phone')}}"
+                        <a href="{{ route('phone') }}"
                             class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                             Show Me </a>
                     </div>

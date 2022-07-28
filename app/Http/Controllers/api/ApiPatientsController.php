@@ -18,13 +18,14 @@ class ApiPatientsController extends Controller
     public function search($key)
     {
 
-        $patients = Patient::where(function ($q) use ($key) {
+        $patient = Patient::where(function ($q) use ($key) {
             $q->where('id', $key)
-                ->orWhere('name', "like", '%' . $key . '%')
+                //->orWhere('name', "like", '%' . $key . '%')
                 ->orWhere('nat_num', $key);
         })->first();
 
-        if ($patients)
+        return $patient;
+        /*if ($patients)
             //dd($patients);
             activity()
                 ->causedBy(1)
@@ -32,8 +33,9 @@ class ApiPatientsController extends Controller
                 ->performedOn($patients)
                 ->log('searching for ' . $patients->name);
 
-        $lastActivity = Activity::all()->last();
-        return $lastActivity;
+        //$lastActivity = Activity::all()->last();
+        //return $lastActivity;
+*/
     }
 
     /**

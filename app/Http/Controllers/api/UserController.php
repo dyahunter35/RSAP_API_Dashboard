@@ -29,13 +29,13 @@ class UserController extends Controller
             ], 401);
         }
 
-        //$token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         $response = [
             'isSuccess' => true,
             'message' => "login successfully",
             'user' => $user,
-            'token' => $token = "token"
+            'token' => $token
         ];
 
         return response($response, 201);

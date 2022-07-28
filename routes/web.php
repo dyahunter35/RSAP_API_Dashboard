@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use robertogallea\LaravelPython\Services\LaravelPython;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,12 @@ Route::get('mail', [\App\Http\Controllers\MailController::class, 'sendEmail']);
 
 Route::get('modal', function () {
     return view('patients.modal');
+});
+
+Route::get('py', function () {
+    $service = new LaravelPython();
+    $result = $service->run(Storage::path('test.py'), ["test me please"]);
+    return $result;
 });
 
 Route::get('mail', function () {

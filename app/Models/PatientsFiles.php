@@ -32,10 +32,11 @@ class PatientsFiles extends Model
         'size'
     ];
 
-
     public function scopePFile($query, $id)
     {
-        return $query->where('patient_id', $id)->get()->groupBy('type'); //GROUP
+        $data = $query->where('patient_id', $id)->get()->groupBy('type'); //GROUP
+        dd($data);
+        return $data;
     }
 
 

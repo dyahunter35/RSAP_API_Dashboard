@@ -7,6 +7,7 @@ use App\Models\Patient;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use robertogallea\LaravelPython\Services\LaravelPython;
 
 class ImageCompareController extends Controller
 {
@@ -38,34 +39,31 @@ class ImageCompareController extends Controller
     public function store(Request $request)
     {
         if (is_file($request->file('file'))) {
-
-            $source = sha1_file($request->file('file'));
-
-            $images = ImageCompare::all();
-
-            foreach ($images as $image) {
-
-                $image_data = sha1(Storage::get($image->url));
-
-                if ($source == $image_data) {
-                    $patient = Patient::where("id",$image->patient_id)->get();
-                    return [
-                        "isSuccess"=>true,
-                        "message"=>"Patient Founded Successfuly",
-                        "data"=>$patient,
-                    ];
+            $source = $request->file('file')->path();
+            $service = new LaravelPython();
+            $result = $service->run(Storage::path('python/fingerprint.py'), [$source]);
+            if ($result != "") {
+                $image = ImageCompare::where('name', $result)->first();
+                if ($image != null) {
+                    $patient = Patient::find($image->patient_id);
+                    if ($patient != null)
+                        return [
+                            "isSuccess" => true,
+                            "message" => "Patient Available",
+                            "data" => $patient,
+                        ];
                 }
             }
             return [
-                "isSuccess"=>false,
-                "message"=>"Patient Not Found",
-                "data"=>null,
+                "isSuccess" => false,
+                "message" => "No Patient Available",
+                "data" => null,
             ];
         } else {
             return [
-                "isSuccess"=>true,
-                "message"=>"No File Available",
-                "data"=>null,
+                "isSuccess" => false,
+                "message" => "No File Available",
+                "data" => null,
             ];
         }
     }
@@ -113,5 +111,33 @@ class ImageCompareController extends Controller
     public function destroy(ImageCompare $imageCompare)
     {
         //
+    }
+
+    public function compare()
+    {
+        /*
+        $source = sha1_file($request->file('file'));
+
+            $images = ImageCompare::all();
+
+            foreach ($images as $image) {
+
+                $image_data = sha1(Storage::get($image->url));
+
+                if ($source == $image_data) {
+                    $patient = Patient::where("id",$image->patient_id)->get();
+                    return [
+                        "isSuccess"=>true,
+                        "message"=>"Patient Founded Successfuly",
+                        "data"=>$patient,
+                    ];
+                }
+            }
+            return [
+                "isSuccess"=>false,
+                "message"=>"Patient Not Found",
+                "data"=>null,
+            ];
+            */
     }
 }

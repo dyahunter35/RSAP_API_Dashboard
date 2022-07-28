@@ -22,8 +22,14 @@ class Patient extends Model
     ];
 
 
+    protected $hidden = [
+        'file',
+        'created_at',
+        'updated_at',
+        'birth_date',
+    ];
     protected $appends = [
-        'age', 'file'
+        'age', 'file','diseases'
     ];
 
     public function files()
@@ -50,6 +56,11 @@ class Patient extends Model
     public function getFileAttribute()
     {
         $data = PatientsFiles::pFile($this->id);
+        return $data;
+    }
+    public function getDiseasesAttribute()
+    {
+        $data = Disease::PDisease($this->id);
         return $data;
     }
 

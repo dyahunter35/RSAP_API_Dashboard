@@ -29,6 +29,10 @@ Route::middleware(["auth:sanctum", 'verified'])->group(function () {
 });
 Route::get('patient/{key}', [\App\Http\Controllers\api\ApiPatientsController::class, 'search']);
 
+Route::get('string', function () {
+    return ['string' => 'test is done'];
+});
+
 // Route::middleware([
 //     'auth:sanctum',
 //     config('jetstream.auth_session'),
